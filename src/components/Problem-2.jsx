@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import ModalA from './Modal/ModalA';
 import ModalB from './Modal/ModalB';
 import MenuContext from './libs/MenuContext';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Problem2 = () => {
     const [displayAllContact, setDisplayAllContact] = useState(false);
     const [displayUsContact, setDisplayUsContact] = useState(false);
+    const [contacts, setContacts ] = useState([]);
 
     const navigate = useNavigate();
     const location = useLocation();
+
+    useEffect(()=> getContact(),[]);
 
     useEffect(()=>{
         if(location.pathname === "/problem-2/all-contacts"){
@@ -39,6 +43,15 @@ const Problem2 = () => {
         setDisplayUsContact(false)
         navigate('/problem-2')
     }
+
+    const getContact = () =>{
+        axios.get('https://contact.mediusware.com/api/contacts/').then((response) => {
+            const contacts = response.data.results;
+            setContacts(contacts);
+        });
+    }
+
+    console.log(contacts);
     return (
 
         <div className="container">
@@ -52,8 +65,14 @@ const Problem2 = () => {
                 
             </div>
             <MenuContext.Provider value={{ displayModalA: handleAllContact, displayModalB:handleUsContact}}>
-                <ModalA displayModal={displayAllContact} onHideModal={handleHideAllContact}/>
-                <ModalB displayModal={displayUsContact} onHideModal={handleHideUsContact}/>
+                <ModalA
+                    contactsData={contacts} 
+                    displayModal={displayAllContact} 
+                    onHideModal={handleHideAllContact}/>
+                <ModalB 
+                    contactsData={contacts}
+                    displayModal={displayUsContact} 
+                    onHideModal={handleHideUsContact}/>
             </MenuContext.Provider>
         </div>
     );

@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modalmenu from './Modalmenu';
 
 function ModalB(props) {
-    const {displayModal,onHideModal} = props;
-    const displayHiddenModal = displayModal ? "modal display-block" : "modal display-none"
+    const {displayModal,onHideModal,contactsData} = props;
+    const displayHiddenModal = displayModal ? "modal display-block" : "modal display-none";
+
+    const [isEven, setIsEven] = useState(false);
+    
+    const handleEven = () =>{
+        setIsEven(!isEven);
+    }
+
     return (
         <div className={displayHiddenModal}>
             <div className='modal-content'>
@@ -13,10 +20,39 @@ function ModalB(props) {
                         <button className='btn modal-buttonC' onClick={onHideModal}>Close</button>
                     </Modalmenu>
                 </div>
-                <div className='modal-body'></div>
-                <div className='modal-display'>
+                <div className='modal-body'>
+                    <table className='table table-striped'>
+                        <thead>
+                            <tr>
+                                <th scope='col'>Phone</th>
+                                <th scope='col'>Country Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {isEven ? (
+                                contactsData.filter((contact) => contact.country.name  === 'United States')
+                                    .filter((contact) => contact.id % 2 === 0 )
+                                        .map((contact, index)=>(
+                                            <tr style={{cursor:'pointer'}} key={index}>
+                                                <td>{contact.phone}</td>
+                                                <td>{contact.country.name}</td>
+                                            </tr>
+                                        ))
+                            ):(
+                                contactsData.filter((contact) => contact.country.name  === 'United States')
+                                    .map((contact, index)=>(
+                                        <tr style={{cursor:'pointer'}} key={index}>
+                                            <td>{contact.phone}</td>
+                                            <td>{contact.country.name}</td>
+                                        </tr>
+                                    ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+                <div className='modal-footer'>
                     <label>
-                        <input type='checkbox'/> Only even
+                        <input type='checkbox' name="evenCheckBox" checked={isEven} onChange={handleEven}/> Only even
                     </label>
                 </div>
             </div>
