@@ -39,8 +39,6 @@ const Problem1 = () => {
         }
     }
 
-    console.log(taskList);
-
     const handleClick = (val) =>{
         setShow(val);
     }

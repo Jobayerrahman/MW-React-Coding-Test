@@ -60,7 +60,6 @@ const Problem2 = () => {
         const finalPercentage = Math.round((scrollTop + modalHeight) / scrollHeight * 100);
         
         if (finalPercentage === 100){
-            console.log("ok");
             setPage((prev)=> prev + 1);
         }
     }
