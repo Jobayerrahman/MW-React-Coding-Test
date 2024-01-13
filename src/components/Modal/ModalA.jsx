@@ -6,6 +6,12 @@ function ModalA(props) {
     const displayHiddenModal = displayModal ? "modal display-block" : "modal display-none";
     
     const [isEven, setIsEven] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+
+
+    const filterContactsData = contactsData.filter(contactData =>{
+        return contactData.phone.toLowerCase().includes(searchQuery.toLowerCase());
+    })
     
     const handleEven = () =>{
         setIsEven(!isEven);
@@ -16,6 +22,7 @@ function ModalA(props) {
             <div className='modal-content'>
                 <div className='modal-header'>
                     <h2>All Contact</h2>
+                    <input className='searchInput' value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder='Search here ...' />
                     <Modalmenu>
                         <button className='btn modal-buttonC' onClick={onHideModal}>Close</button>
                     </Modalmenu>
@@ -30,7 +37,7 @@ function ModalA(props) {
                         </thead>
                         <tbody>
                             {isEven ? (
-                                contactsData.filter((contact) => contact.id % 2 === 0 )
+                                filterContactsData.filter((contact) => contact.id % 2 === 0 )
                                     .map((contact, index)=>(
                                         <tr style={{cursor:'pointer'}} key={index}>
                                             <td>{contact.phone}</td>
@@ -38,7 +45,7 @@ function ModalA(props) {
                                         </tr>
                                     ))
                             ):(
-                                contactsData.map((contact, index)=>(
+                                filterContactsData.map((contact, index)=>(
                                     <tr style={{cursor:'pointer'}} key={index}>
                                         <td>{contact.phone}</td>
                                         <td>{contact.country.name}</td>

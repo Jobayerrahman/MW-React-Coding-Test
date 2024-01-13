@@ -25,13 +25,19 @@
 .modal-header{
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
 }
 
 .modal-header h2{
     margin: 0;
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 700;
+}
+
+.searchInput{
+    padding: 6px;
+    border-radius: 5px;
+    width: 250px;
 }
 
 .model-menu{
