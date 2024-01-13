@@ -10,7 +10,7 @@ function ModalA(props) {
                 <div className='modal-header'>
                     <h2>All Contact</h2>
                     <Modalmenu>
-                        <button onClick={onHideModal}>Close</button>
+                        <button className='btn modal-buttonC' onClick={onHideModal}>Close</button>
                     </Modalmenu>
                 </div>
                 <div className='modal-body'></div>

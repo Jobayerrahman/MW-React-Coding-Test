@@ -28,11 +28,59 @@
     align-items: baseline;
 }
 
+.modal-header h2{
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+}
+
 .model-menu{
     display: flex;
     justify-content: space-around;
     align-items: center;
     text-align: center;
+}
+
+.modal-buttonA{
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 600;
+    margin: 0px 10px;
+    background:#46139f;
+}
+
+.modal-buttonA:hover{
+    color: #fff;
+    background:#46139f;
+}
+
+.modal-buttonB{
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 600;
+    margin: 0px 10px;
+    background:#ff7f50;
+}
+
+.modal-buttonB:hover{
+    color: #fff;
+    background:#ff7f50;
+}
+
+.modal-buttonC{
+    width: 100px;
+    color: #000;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0px 10px;
+    border-radius: 5px;
+    background: transparent;
+    border: 2px solid #46139f;
 }
 
 .modal-body{
