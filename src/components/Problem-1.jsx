@@ -84,7 +84,22 @@ const Problem1 = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        
+                            {taskList.filter((task) => task.taskStatus.toLowerCase() === show).length === 0 ? (
+                                taskList.sort((a,b) => a.taskStatusValue > b.taskStatusValue ? 1:-1)
+                                    .map((task)=>(
+                                        <tr>
+                                            <td>{task.taskName}</td>
+                                            <td>{task.taskStatus}</td>
+                                        </tr>
+                                    ))
+                            ):(taskList.filter((task)=> task.taskStatus.toLowerCase() === show)
+                                    .map((task)=>(
+                                        <tr>
+                                            <td>{task.taskName}</td>
+                                            <td>{task.taskStatus}</td>
+                                        </tr>
+                                    ))
+                            )}
                         </tbody>
                     </table>
                 </div>
