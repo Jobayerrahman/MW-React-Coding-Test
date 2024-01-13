@@ -2,18 +2,20 @@ import axios from 'axios';
 import ModalA from './Modal/ModalA';
 import ModalB from './Modal/ModalB';
 import MenuContext from './libs/MenuContext';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Problem2 = () => {
     const [displayAllContact, setDisplayAllContact] = useState(false);
     const [displayUsContact, setDisplayUsContact] = useState(false);
     const [contacts, setContacts ] = useState([]);
+    const [page, setPage]          = useState(1);
 
-    const navigate = useNavigate();
-    const location = useLocation();
+    const navigate      = useNavigate();
+    const location      = useLocation();
+    const modalBodyRef  = useRef(null);
 
-    useEffect(()=> getContact(),[]);
+    useEffect(()=> getContact(),[page]);
 
     useEffect(()=>{
         if(location.pathname === "/problem-2/all-contacts"){
@@ -45,13 +47,24 @@ const Problem2 = () => {
     }
 
     const getContact = () =>{
-        axios.get('https://contact.mediusware.com/api/contacts/').then((response) => {
+        axios.get(`https://contact.mediusware.com/api/contacts/?page=${page}`).then((response) => {
             const contacts = response.data.results;
-            setContacts(contacts);
+            setContacts((prev)=>[...prev,...contacts]);
         });
     }
 
-    console.log(contacts);
+    const handleInfiniteScroll = () =>{
+        const modalHeight = modalBodyRef.current.clientHeight;
+        const scrollTop    = modalBodyRef.current.scrollTop;
+        const scrollHeight = modalBodyRef.current.scrollHeight;
+        const finalPercentage = Math.round((scrollTop + modalHeight) / scrollHeight * 100);
+        
+        if (finalPercentage === 100){
+            console.log("ok");
+            setPage((prev)=> prev + 1);
+        }
+    }
+    
     return (
 
         <div className="container">
@@ -66,9 +79,11 @@ const Problem2 = () => {
             </div>
             <MenuContext.Provider value={{ displayModalA: handleAllContact, displayModalB:handleUsContact}}>
                 <ModalA
+                    ref={modalBodyRef}
                     contactsData={contacts} 
                     displayModal={displayAllContact} 
-                    onHideModal={handleHideAllContact}/>
+                    onHideModal={handleHideAllContact}
+                    scrollModal={handleInfiniteScroll}/>
                 <ModalB 
                     contactsData={contacts}
                     displayModal={displayUsContact} 

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,forwardRef } from 'react';
 import Modalmenu from './Modalmenu';
 import ModalC from './ModalC';
 
-function ModalA(props) {
-    const {displayModal,onHideModal,contactsData} = props;
+const ModalA = forwardRef(function ModalA(props,ref) {
+    const {displayModal,onHideModal,scrollModal,contactsData} = props;
     const displayHiddenModal = displayModal ? "modal display-block" : "modal display-none";
     
     const [isEven, setIsEven] = useState(false);
@@ -42,7 +42,7 @@ function ModalA(props) {
                         <button className='btn modal-buttonC' onClick={onHideModal}>Close</button>
                     </Modalmenu>
                 </div>
-                <div className='modal-body'>
+                <div ref={ref} className='modal-body' onScroll={scrollModal}>
                     <table className='table table-striped'>
                         <thead>
                             <tr>
@@ -83,6 +83,6 @@ function ModalA(props) {
                 countryDetail={countryDetails}/>
         </div>
     );
-}
+});
 
 export default ModalA;
