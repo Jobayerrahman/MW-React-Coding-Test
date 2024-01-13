@@ -3,6 +3,43 @@ import React, {useState} from 'react';
 const Problem1 = () => {
 
     const [show, setShow] = useState('all');
+    const [name, setName] = useState('');
+    const [status, setStatus] = useState('');
+    const [statusValue, setStatusValue] = useState('');
+    const [taskList, setTaskList] = useState([])
+
+
+    const handleInput = (e) =>{
+        if(e.target.type === 'text'){
+            const inputValue  =  e.target.value
+            if(e.target.name === 'name'){
+                setName(inputValue);
+            }else if(e.target.name === 'status'){
+                setStatus(inputValue);
+                if( inputValue.toLowerCase() === 'active' ){
+                    setStatusValue(1);
+                }else if( inputValue.toLowerCase() === 'completed'){
+                    setStatusValue(2);
+                }else{
+                    setStatusValue(3);
+                }
+            }
+        }
+    }
+
+    const handleSubmit = (e) =>{
+        e.preventDefault()
+        if(name === '' || status === ''){
+            alert(`Can't submit empty field`)
+        }else{
+            setTaskList([...taskList,{taskName:name, taskStatus:status, taskStatusValue: statusValue}])
+            setName('')
+            setStatus('')
+            setStatusValue('')
+        }
+    }
+
+    console.log(taskList);
 
     const handleClick = (val) =>{
         setShow(val);
@@ -16,13 +53,13 @@ const Problem1 = () => {
                 <div className="col-6 ">
                     <form className="row gy-2 gx-3 align-items-center mb-4">
                         <div className="col-auto">
-                            <input type="text" className="form-control" placeholder="Name"/>
+                            <input name='name' type="text" className="form-control" placeholder="Name" onChange={handleInput} value={name}/>
                         </div>
                         <div className="col-auto">
-                            <input type="text" className="form-control" placeholder="Status"/>
+                            <input name='status' type="text" className="form-control" placeholder="Status" onChange={handleInput} value={status}/>
                         </div>
                         <div className="col-auto">
-                            <button type="submit" className="btn btn-primary">Submit</button>
+                            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
                         </div>
                     </form>
                 </div>
